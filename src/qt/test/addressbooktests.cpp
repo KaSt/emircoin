@@ -4,6 +4,8 @@
 
 #include <interfaces/chain.h>
 #include <interfaces/node.h>
+#include <qt/addressbookpage.h>
+#include <qt/addresstablemodel.h>
 #include <qt/editaddressdialog.h>
 #include <qt/optionsmodel.h>
 #include <qt/platformstyle.h>
@@ -147,7 +149,7 @@ void AddressBookTests::addressBookTests()
         // and fails to handle returned nulls
         // (https://bugreports.qt.io/browse/QTBUG-49686).
         QWARN("Skipping AddressBookTests on mac build with 'minimal' platform set due to Qt bugs. To run AppTests, invoke "
-              "with 'test_bitcoin-qt -platform cocoa' on mac, or else use a linux or windows build.");
+              "with 'test_emircoin-qt -platform cocoa' on mac, or else use a linux or windows build.");
         return;
     }
 #endif

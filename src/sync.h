@@ -1,10 +1,10 @@
-// Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2018 The Bitcoin Core developers
+// Copyright (c) 2009-2010 Emiris Nakamoto
+// Copyright (c) 2009-2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_SYNC_H
-#define BITCOIN_SYNC_H
+#ifndef EMIRCOIN_SYNC_H
+#define EMIRCOIN_SYNC_H
 
 #include <threadsafety.h>
 
@@ -318,4 +318,4 @@ struct SCOPED_LOCKABLE LockAssertion
     ~LockAssertion() UNLOCK_FUNCTION() {}
 };
 
-#endif // BITCOIN_SYNC_H
+#endif // EMIRCOIN_SYNC_H

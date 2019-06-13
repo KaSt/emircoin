@@ -1,0 +1,33 @@
+# /etc/conf.d/bitcoind: config file for /etc/init.d/bitcoind
+
+# Config file location
+#EMIRCOIND_CONFIGFILE="/etc/bitcoin/bitcoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $EMIRCOIND_USER)
+#EMIRCOIND_PIDDIR="/var/run/bitcoind"
+
+# What filename to give the pidfile
+#EMIRCOIND_PIDFILE="${EMIRCOIND_PIDDIR}/bitcoind.pid"
+
+# Where to write bitcoind data (be mindful that the blockchain is large)
+#EMIRCOIND_DATADIR="/var/lib/bitcoind"
+
+# User and group to own bitcoind process
+#EMIRCOIND_USER="bitcoin"
+#EMIRCOIND_GROUP="bitcoin"
+
+# Path to bitcoind executable
+#EMIRCOIND_BIN="/usr/bin/bitcoind"
+
+# Nice value to run bitcoind under
+#EMIRCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#EMIRCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for bitcoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+EMIRCOIND_SIGTERM_TIMEOUT=60

@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2019 The Bitcoin Core developers
+// Copyright (c) 2017-2019 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,6 +7,7 @@
 #include <util/bip32.h>
 #include <util/strencodings.h>
 #include <wallet/psbtwallet.h>
+#include <wallet/rpcwallet.h>
 #include <wallet/wallet.h>
 #include <univalue.h>
 

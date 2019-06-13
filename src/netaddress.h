@@ -1,12 +1,12 @@
-// Copyright (c) 2009-2018 The Bitcoin Core developers
+// Copyright (c) 2009-2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_NETADDRESS_H
-#define BITCOIN_NETADDRESS_H
+#ifndef EMIRCOIN_NETADDRESS_H
+#define EMIRCOIN_NETADDRESS_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/emircoin-config.h>
 #endif
 
 #include <compat.h>
@@ -63,8 +63,7 @@ class CNetAddr
         bool IsRFC3964() const; // IPv6 6to4 tunnelling (2002::/16)
         bool IsRFC4193() const; // IPv6 unique local (FC00::/7)
         bool IsRFC4380() const; // IPv6 Teredo tunnelling (2001::/32)
-        bool IsRFC4843() const; // IPv6 ORCHID (deprecated) (2001:10::/28)
-        bool IsRFC7343() const; // IPv6 ORCHIDv2 (2001:20::/28)
+        bool IsRFC4843() const; // IPv6 ORCHID (2001:10::/28)
         bool IsRFC4862() const; // IPv6 autoconfig (FE80::/64)
         bool IsRFC6052() const; // IPv6 well-known prefix for IPv4-embedded address (64:FF9B::/96)
         bool IsRFC6145() const; // IPv6 IPv4-translated address (::FFFF:0:0:0/96) (actually defined in RFC2765)
@@ -170,4 +169,4 @@ class CService : public CNetAddr
         }
 };
 
-#endif // BITCOIN_NETADDRESS_H
+#endif // EMIRCOIN_NETADDRESS_H

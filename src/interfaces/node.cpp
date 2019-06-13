@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Bitcoin Core developers
+// Copyright (c) 2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -23,6 +23,7 @@
 #include <policy/settings.h>
 #include <primitives/block.h>
 #include <rpc/server.h>
+#include <scheduler.h>
 #include <shutdown.h>
 #include <sync.h>
 #include <txmempool.h>
@@ -32,7 +33,7 @@
 #include <warnings.h>
 
 #if defined(HAVE_CONFIG_H)
-#include <config/bitcoin-config.h>
+#include <config/emircoin-config.h>
 #endif
 
 #include <atomic>
@@ -196,7 +197,7 @@ public:
         }
         return GuessVerificationProgress(Params().TxData(), tip);
     }
-    bool isInitialBlockDownload() override { return ::ChainstateActive().IsInitialBlockDownload(); }
+    bool isInitialBlockDownload() override { return IsInitialBlockDownload(); }
     bool getReindex() override { return ::fReindex; }
     bool getImporting() override { return ::fImporting; }
     void setNetworkActive(bool active) override

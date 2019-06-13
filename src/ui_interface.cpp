@@ -1,8 +1,9 @@
-// Copyright (c) 2010-2018 The Bitcoin Core developers
+// Copyright (c) 2010-2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <ui_interface.h>
+#include <util/system.h>
 
 #include <boost/signals2/last_value.hpp>
 #include <boost/signals2/signal.hpp>

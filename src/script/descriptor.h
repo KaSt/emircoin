@@ -1,9 +1,9 @@
-// Copyright (c) 2018 The Bitcoin Core developers
+// Copyright (c) 2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_SCRIPT_DESCRIPTOR_H
-#define BITCOIN_SCRIPT_DESCRIPTOR_H
+#ifndef EMIRCOIN_SCRIPT_DESCRIPTOR_H
+#define EMIRCOIN_SCRIPT_DESCRIPTOR_H
 
 #include <script/script.h>
 #include <script/sign.h>
@@ -60,14 +60,6 @@ struct Descriptor {
      * out: scripts and public keys necessary for solving the expanded scriptPubKeys will be put here (may be equal to provider).
      */
     virtual bool ExpandFromCache(int pos, const std::vector<unsigned char>& cache, std::vector<CScript>& output_scripts, FlatSigningProvider& out) const = 0;
-
-    /** Expand the private key for a descriptor at a specified position, if possible.
-     *
-     * pos: the position at which to expand the descriptor. If IsRange() is false, this is ignored.
-     * provider: the provider to query for the private keys.
-     * out: any private keys available for the specified pos will be placed here.
-     */
-    virtual void ExpandPrivate(int pos, const SigningProvider& provider, FlatSigningProvider& out) const = 0;
 };
 
 /** Parse a descriptor string. Included private keys are put in out.
@@ -96,4 +88,4 @@ std::unique_ptr<Descriptor> Parse(const std::string& descriptor, FlatSigningProv
  */
 std::unique_ptr<Descriptor> InferDescriptor(const CScript& script, const SigningProvider& provider);
 
-#endif // BITCOIN_SCRIPT_DESCRIPTOR_H
+#endif // EMIRCOIN_SCRIPT_DESCRIPTOR_H

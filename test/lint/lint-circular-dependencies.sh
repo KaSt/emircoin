@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2018 The Bitcoin Core developers
+# Copyright (c) 2018 The Emircoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
@@ -12,11 +12,12 @@ EXPECTED_CIRCULAR_DEPENDENCIES=(
     "chainparamsbase -> util/system -> chainparamsbase"
     "index/txindex -> validation -> index/txindex"
     "policy/fees -> txmempool -> policy/fees"
+    "policy/policy -> policy/settings -> policy/policy"
     "qt/addresstablemodel -> qt/walletmodel -> qt/addresstablemodel"
     "qt/bantablemodel -> qt/clientmodel -> qt/bantablemodel"
-    "qt/bitcoingui -> qt/utilitydialog -> qt/bitcoingui"
-    "qt/bitcoingui -> qt/walletframe -> qt/bitcoingui"
-    "qt/bitcoingui -> qt/walletview -> qt/bitcoingui"
+    "qt/emircoingui -> qt/utilitydialog -> qt/emircoingui"
+    "qt/emircoingui -> qt/walletframe -> qt/emircoingui"
+    "qt/emircoingui -> qt/walletview -> qt/emircoingui"
     "qt/clientmodel -> qt/peertablemodel -> qt/clientmodel"
     "qt/paymentserver -> qt/walletmodel -> qt/paymentserver"
     "qt/recentrequeststablemodel -> qt/walletmodel -> qt/recentrequeststablemodel"
@@ -24,12 +25,18 @@ EXPECTED_CIRCULAR_DEPENDENCIES=(
     "qt/transactiontablemodel -> qt/walletmodel -> qt/transactiontablemodel"
     "qt/walletmodel -> qt/walletmodeltransaction -> qt/walletmodel"
     "txmempool -> validation -> txmempool"
+    "validation -> validationinterface -> validation"
     "wallet/coincontrol -> wallet/wallet -> wallet/coincontrol"
     "wallet/fees -> wallet/wallet -> wallet/fees"
     "wallet/wallet -> wallet/walletdb -> wallet/wallet"
     "policy/fees -> txmempool -> validation -> policy/fees"
+    "policy/rbf -> txmempool -> validation -> policy/rbf"
+    "qt/addressbookpage -> qt/emircoingui -> qt/walletview -> qt/addressbookpage"
     "qt/guiutil -> qt/walletmodel -> qt/optionsmodel -> qt/guiutil"
     "txmempool -> validation -> validationinterface -> txmempool"
+    "qt/addressbookpage -> qt/emircoingui -> qt/walletview -> qt/receivecoinsdialog -> qt/addressbookpage"
+    "qt/addressbookpage -> qt/emircoingui -> qt/walletview -> qt/signverifymessagedialog -> qt/addressbookpage"
+    "qt/addressbookpage -> qt/emircoingui -> qt/walletview -> qt/sendcoinsdialog -> qt/sendcoinsentry -> qt/addressbookpage"
 )
 
 EXIT_CODE=0

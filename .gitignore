@@ -1,14 +1,14 @@
 *.tar.gz
 
 *.exe
-src/bitcoin
-src/bitcoind
-src/bitcoin-cli
-src/bitcoin-tx
-src/bitcoin-wallet
-src/test/test_bitcoin
-src/test/test_bitcoin_fuzzy
-src/qt/test/test_bitcoin-qt
+src/emircoin
+src/emircoind
+src/emircoin-cli
+src/emircoin-tx
+src/emircoin-wallet
+src/test/test_emircoin
+src/test/test_emircoin_fuzzy
+src/qt/test/test_emircoin-qt
 
 # autoreconf
 Makefile.in
@@ -31,8 +31,8 @@ config.log
 config.status
 configure
 libtool
-src/config/bitcoin-config.h
-src/config/bitcoin-config.h.in
+src/config/emircoin-config.h
+src/config/emircoin-config.h.in
 src/config/stamp-h1
 share/setup.nsi
 share/qt/Info.plist
@@ -45,11 +45,11 @@ src/qt/forms/ui_*.h
 
 src/qt/test/moc*.cpp
 
-src/qt/bitcoin-qt.config
-src/qt/bitcoin-qt.creator
-src/qt/bitcoin-qt.creator.user
-src/qt/bitcoin-qt.files
-src/qt/bitcoin-qt.includes
+src/qt/emircoin-qt.config
+src/qt/emircoin-qt.creator
+src/qt/emircoin-qt.creator.user
+src/qt/emircoin-qt.files
+src/qt/emircoin-qt.includes
 
 .deps
 .dirstamp
@@ -85,13 +85,13 @@ src/qt/bitcoin-qt.includes
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-bitcoin-qt
-Bitcoin-Qt.app
+emircoin-qt
+Emircoin-Qt.app
 background.tiff*
 
 # Unit-tests
 Makefile.test
-bitcoin-qt_test
+emircoin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -104,7 +104,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_bitcoin.coverage/
+test_emircoin.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -119,7 +119,7 @@ test/cache/*
 
 /doc/doxygen/
 
-libbitcoinconsensus.pc
+libemircoinconsensus.pc
 contrib/devtools/split-debug.sh
 
 # Output from running db4 installation

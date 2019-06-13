@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2018 The Bitcoin Core developers
+// Copyright (c) 2011-2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -9,12 +9,18 @@
 #include <qt/guiutil.h>
 #include <qt/peertablemodel.h>
 
+#include <chain.h>
+#include <chainparams.h>
 #include <clientversion.h>
 #include <interfaces/handler.h>
 #include <interfaces/node.h>
+#include <validation.h>
 #include <net.h>
 #include <netbase.h>
+#include <txmempool.h>
+#include <ui_interface.h>
 #include <util/system.h>
+#include <warnings.h>
 
 #include <stdint.h>
 

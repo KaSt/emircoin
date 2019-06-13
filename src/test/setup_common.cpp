@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2019 The Bitcoin Core developers
+// Copyright (c) 2011-2019 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,6 +18,7 @@
 #include <rpc/server.h>
 #include <script/sigcache.h>
 #include <streams.h>
+#include <ui_interface.h>
 #include <util/validation.h>
 #include <validation.h>
 

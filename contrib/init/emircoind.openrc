@@ -1,0 +1,92 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/bitcoin/.bitcoin" ]; then
+	EMIRCOIND_DEFAULT_DATADIR="/var/lib/bitcoin/.bitcoin"
+else
+	EMIRCOIND_DEFAULT_DATADIR="/var/lib/bitcoind"
+fi
+
+EMIRCOIND_CONFIGFILE=${EMIRCOIND_CONFIGFILE:-/etc/bitcoin/bitcoin.conf}
+EMIRCOIND_PIDDIR=${EMIRCOIND_PIDDIR:-/var/run/bitcoind}
+EMIRCOIND_PIDFILE=${EMIRCOIND_PIDFILE:-${EMIRCOIND_PIDDIR}/bitcoind.pid}
+EMIRCOIND_DATADIR=${EMIRCOIND_DATADIR:-${EMIRCOIND_DEFAULT_DATADIR}}
+EMIRCOIND_USER=${EMIRCOIND_USER:-${EMIRCOIN_USER:-bitcoin}}
+EMIRCOIND_GROUP=${EMIRCOIND_GROUP:-bitcoin}
+EMIRCOIND_BIN=${EMIRCOIND_BIN:-/usr/bin/bitcoind}
+EMIRCOIND_NICE=${EMIRCOIND_NICE:-${NICELEVEL:-0}}
+EMIRCOIND_OPTS="${EMIRCOIND_OPTS:-${EMIRCOIN_OPTS}}"
+
+name="Emircoin Core Daemon"
+description="Emircoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/bitcoind"
+command_args="-pid=\"${EMIRCOIND_PIDFILE}\" \
+		-conf=\"${EMIRCOIND_CONFIGFILE}\" \
+		-datadir=\"${EMIRCOIND_DATADIR}\" \
+		-daemon \
+		${EMIRCOIND_OPTS}"
+
+required_files="${EMIRCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${EMIRCOIND_USER} \
+			-N ${EMIRCOIND_NICE} -w 2000"
+pidfile="${EMIRCOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${EMIRCOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${EMIRCOIND_USER}:${EMIRCOIND_GROUP}" \
+	"${EMIRCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${EMIRCOIND_USER}:${EMIRCOIND_GROUP}" \
+	"${EMIRCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o ${EMIRCOIND_USER}:${EMIRCOIND_GROUP} \
+	-m 0660 \
+	${EMIRCOIND_CONFIGFILE}
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if ! grep -qs '^rpcpassword=' "${EMIRCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run bitcoind."
+		eerror "The setting must appear in ${EMIRCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Emircoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}

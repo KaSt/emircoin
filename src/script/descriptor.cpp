@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The Bitcoin Core developers
+// Copyright (c) 2018 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -164,9 +164,6 @@ struct PubkeyProvider
 
     /** Get the descriptor string form including private data (if available in arg). */
     virtual bool ToPrivateString(const SigningProvider& arg, std::string& out) const = 0;
-
-    /** Derive a private key, if private data is available in arg. */
-    virtual bool GetPrivKey(int pos, const SigningProvider& arg, CKey& key) const = 0;
 };
 
 class OriginPubkeyProvider final : public PubkeyProvider
@@ -198,10 +195,6 @@ public:
         ret = "[" + OriginString() + "]" + std::move(sub);
         return true;
     }
-    bool GetPrivKey(int pos, const SigningProvider& arg, CKey& key) const override
-    {
-        return m_provider->GetPrivKey(pos, arg, key);
-    }
 };
 
 /** An object representing a parsed constant public key in a descriptor. */
@@ -228,10 +221,6 @@ public:
         if (!arg.GetKey(m_pubkey.GetID(), key)) return false;
         ret = EncodeSecret(key);
         return true;
-    }
-    bool GetPrivKey(int pos, const SigningProvider& arg, CKey& key) const override
-    {
-        return arg.GetKey(m_pubkey.GetID(), key);
     }
 };
 
@@ -277,9 +266,14 @@ public:
     {
         if (key) {
             if (IsHardened()) {
-                CKey priv_key;
-                if (!GetPrivKey(pos, arg, priv_key)) return false;
-                *key = priv_key.GetPubKey();
+                CExtKey extkey;
+                if (!GetExtKey(arg, extkey)) return false;
+                for (auto entry : m_path) {
+                    extkey.Derive(extkey, entry);
+                }
+                if (m_derive == DeriveType::UNHARDENED) extkey.Derive(extkey, pos);
+                if (m_derive == DeriveType::HARDENED) extkey.Derive(extkey, pos | 0x80000000UL);
+                *key = extkey.Neuter().pubkey;
             } else {
                 // TODO: optimize by caching
                 CExtPubKey extkey = m_extkey;
@@ -316,18 +310,6 @@ public:
             out += "/*";
             if (m_derive == DeriveType::HARDENED) out += '\'';
         }
-        return true;
-    }
-    bool GetPrivKey(int pos, const SigningProvider& arg, CKey& key) const override
-    {
-        CExtKey extkey;
-        if (!GetExtKey(arg, extkey)) return false;
-        for (auto entry : m_path) {
-            extkey.Derive(extkey, entry);
-        }
-        if (m_derive == DeriveType::UNHARDENED) extkey.Derive(extkey, pos);
-        if (m_derive == DeriveType::HARDENED) extkey.Derive(extkey, pos | 0x80000000UL);
-        key = extkey.key;
         return true;
     }
 };
@@ -479,20 +461,6 @@ public:
     {
         Span<const unsigned char> span = MakeSpan(cache);
         return ExpandHelper(pos, DUMMY_SIGNING_PROVIDER, &span, output_scripts, out, nullptr) && span.size() == 0;
-    }
-
-    void ExpandPrivate(int pos, const SigningProvider& provider, FlatSigningProvider& out) const final
-    {
-        for (const auto& p : m_pubkey_args) {
-            CKey key;
-            if (!p->GetPrivKey(pos, provider, key)) continue;
-            out.keys.emplace(key.GetPubKey().GetID(), key);
-        }
-        if (m_script_arg) {
-            FlatSigningProvider subprovider;
-            m_script_arg->ExpandPrivate(pos, provider, subprovider);
-            out = Merge(out, subprovider);
-        }
     }
 };
 

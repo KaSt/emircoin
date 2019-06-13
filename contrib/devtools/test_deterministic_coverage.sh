@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019 The Bitcoin Core developers
+# Copyright (c) 2019 The Emircoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
@@ -14,7 +14,6 @@ GCOV_EXECUTABLE="gcov"
 
 # Disable tests known to cause non-deterministic behaviour and document the source or point of non-determinism.
 NON_DETERMINISTIC_TESTS=(
-    "blockfilter_index_tests/blockfilter_index_initial_sync"  # src/checkqueue.h: In CCheckQueue::Loop(): while (queue.empty()) { ... }
     "coinselector_tests/knapsack_solver_test"                 # coinselector_tests.cpp: if (equal_sets(setCoinsRet, setCoinsRet2))
     "denialofservice_tests/DoS_mapOrphans"                    # denialofservice_tests.cpp: it = mapOrphanTransactions.lower_bound(InsecureRand256());
     "fs_tests/fsbridge_fstream"                               # deterministic test failure?
@@ -35,7 +34,7 @@ NON_DETERMINISTIC_TESTS=(
     "wallet_tests/wallet_disableprivkeys"                     # validation.cpp: if (GetMainSignals().CallbacksPending() > 10)
 )
 
-TEST_BITCOIN_BINARY="src/test/test_bitcoin"
+TEST_EMIRCOIN_BINARY="src/test/test_emircoin"
 
 print_usage() {
     echo "Usage: $0 [custom test filter (default: all but known non-deterministic tests)] [number of test runs (default: 2)]"
@@ -81,8 +80,8 @@ if ! command -v gcovr > /dev/null; then
     exit 1
 fi
 
-if [[ ! -e ${TEST_BITCOIN_BINARY} ]]; then
-    echo "Error: Executable ${TEST_BITCOIN_BINARY} not found. Run \"./configure --enable-lcov\" and compile."
+if [[ ! -e ${TEST_EMIRCOIN_BINARY} ]]; then
+    echo "Error: Executable ${TEST_EMIRCOIN_BINARY} not found. Run \"./configure --enable-lcov\" and compile."
     exit 1
 fi
 
@@ -109,7 +108,7 @@ while [[ ${TEST_RUN_ID} -lt ${N_TEST_RUNS} ]]; do
         exit 1
     fi
     TEST_OUTPUT_TEMPFILE=$(mktemp)
-    if ! BOOST_TEST_RUN_FILTERS="${BOOST_TEST_RUN_FILTERS}" ${TEST_BITCOIN_BINARY} > "${TEST_OUTPUT_TEMPFILE}" 2>&1; then
+    if ! BOOST_TEST_RUN_FILTERS="${BOOST_TEST_RUN_FILTERS}" ${TEST_EMIRCOIN_BINARY} > "${TEST_OUTPUT_TEMPFILE}" 2>&1; then
         cat "${TEST_OUTPUT_TEMPFILE}"
         rm "${TEST_OUTPUT_TEMPFILE}"
         exit 1

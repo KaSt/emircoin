@@ -1,5 +1,5 @@
 // Copyright (c) 2010 Satoshi Nakamoto
-// Copyright (c) 2009-2019 The Bitcoin Core developers
+// Copyright (c) 2009-2019 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,9 +7,11 @@
 
 #include <fs.h>
 #include <key_io.h>
+#include <random.h>
 #include <rpc/util.h>
 #include <shutdown.h>
 #include <sync.h>
+#include <ui_interface.h>
 #include <util/strencodings.h>
 #include <util/system.h>
 
@@ -162,7 +164,7 @@ UniValue stop(const JSONRPCRequest& jsonRequest)
     if (jsonRequest.fHelp || jsonRequest.params.size() > 1)
         throw std::runtime_error(
             RPCHelpMan{"stop",
-                "\nStop Bitcoin server.",
+                "\nStop Emircoin server.",
                 {},
                 RPCResults{},
                 RPCExamples{""},
@@ -173,7 +175,7 @@ UniValue stop(const JSONRPCRequest& jsonRequest)
     if (jsonRequest.params[0].isNum()) {
         MilliSleep(jsonRequest.params[0].get_int());
     }
-    return "Bitcoin server stopping";
+    return "Emircoin server stopping";
 }
 
 static UniValue uptime(const JSONRPCRequest& jsonRequest)

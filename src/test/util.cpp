@@ -1,4 +1,4 @@
-// Copyright (c) 2019 The Bitcoin Core developers
+// Copyright (c) 2019 The Emircoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -6,11 +6,14 @@
 
 #include <chainparams.h>
 #include <consensus/merkle.h>
+#include <consensus/validation.h>
 #include <key_io.h>
 #include <miner.h>
 #include <outputtype.h>
 #include <pow.h>
+#include <scheduler.h>
 #include <script/standard.h>
+#include <txdb.h>
 #include <validation.h>
 #include <validationinterface.h>
 #ifdef ENABLE_WALLET
