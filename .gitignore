@@ -9,6 +9,7 @@ src/emircoin-wallet
 src/test/test_emircoin
 src/test/test_emircoin_fuzzy
 src/qt/test/test_emircoin-qt
+src/bench/bench_emircoin
 
 # autoreconf
 Makefile.in
