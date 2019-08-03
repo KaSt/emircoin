@@ -13,4 +13,14 @@ steps:
   - CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/ --disable-test --with-incompatible-bdb --disable-bench  
   - make
   - make deploy
+- name: S3-Upload
+  image: plugins/s3
+  settings:
+    bucket: emircoin
+    access_key: 
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    source: ./emircoin-0.18.99-win64-setup.exe
+    target: /Drone-Win/emircoin-0.18.99-win64-setup.exe
 
