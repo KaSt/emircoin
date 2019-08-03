@@ -1,0 +1,17 @@
+kind: pipeline
+name: default
+
+steps:
+- name: Emircoin-Win
+  image: kast/coinbuild:latest
+  commands:
+  - echo 1 | update-alternatives --config x86_64-w64-mingw32-g++
+  - PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
+  - cd depends
+  - make HOST=x86_64-w64-mingw32
+  - cd ..
+  - ./autogen.sh
+  - CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/ --disable-test --with-incompatible-bdb --disable-bench  
+  - make
+  - make deploy
+
