@@ -636,8 +636,8 @@ void EmircoinGUI::setWalletController(WalletController* wallet_controller)
     m_open_wallet_action->setEnabled(true);
     m_open_wallet_action->setMenu(new QMenu(this));
 
-    connect(wallet_controller, &WalletController::walletAdded, this, &BitcoinGUI::addWallet);
-    connect(wallet_controller, &WalletController::walletRemoved, this, &BitcoinGUI::removeWallet);
+    connect(wallet_controller, &WalletController::walletAdded, this, &EmircoinGUI::addWallet);
+    connect(wallet_controller, &WalletController::walletRemoved, this, &EmircoinGUI::removeWallet);
 
     for (WalletModel* wallet_model : m_wallet_controller->getWallets()) {
         addWallet(wallet_model);
