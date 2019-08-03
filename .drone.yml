@@ -6,7 +6,6 @@ steps:
   image: kast/coinbuild:latest
   commands:
   - echo 1 | update-alternatives --config x86_64-w64-mingw32-g++
-  - PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
   - cd depends
   - make HOST=x86_64-w64-mingw32
   - cd ..
