@@ -1,7 +1,7 @@
 Emircoin Core integration/staging tree
 =====================================
 
-[![Build Status](https://travis-ci.org/emircoin/emircoin.svg?branch=master)](https://travis-ci.org/emircoin/emircoin)
+[![Build Status](https://drone.ka.st/api/badges/KaSt/emircoin/status.svg)](https://drone.ka.st/KaSt/emircoin)
 
 https://emircoincore.org
 
