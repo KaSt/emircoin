@@ -2,6 +2,15 @@ kind: pipeline
 name: default
 
 steps:
+- name: restore
+  image: plugins/s3-cache
+  settings:
+    pull: true
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key 
+    restore: true    
 - name: Emircoin-Win
   image: kast/coinbuild:latest
   commands:
@@ -10,13 +19,15 @@ steps:
   - make HOST=x86_64-w64-mingw32
   - cd ..
   - ./autogen.sh
-  - CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/ --disable-test --with-incompatible-bdb --disable-bench  
+  - CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=./Drone-Win --disable-test --with-incompatible-bdb --disable-bench  
   - make
+  - make install
   - make deploy
 - name: S3-Upload
   image: plugins/s3
   settings:
     bucket: emircoin
+    region: eu-west-1
     acl: public-read
     access_key: 
       from_secret: aws_access_key_id
@@ -24,4 +35,29 @@ steps:
       from_secret: aws_secret_access_key
     source: ./emircoin-0.18.99-win64-setup.exe
     target: /Drone-Win/emircoin-0.18.99-win64-setup.exe
+- name: rebuild
+  image: plugins/s3-cache
+  settings:
+    pull: true
+    access_key:
+      from_secret: aws_access_key_id
+    secret_key:
+      from_secret: aws_secret_access_key
+    rebuild: true
+    mount:
+      - depends
+      - Drone-Win
+    when:
+      event: push
+ 
+- name: flush
+  image: plugins/s3-cache:1
+  settings:
+    pull: true
+    access_key: 
+      from_secret: aws_access_key_id
+    secret_key: 
+      from_secret: aws_secret_access_key     
+    flush: true
+    flush_age: 14
 
